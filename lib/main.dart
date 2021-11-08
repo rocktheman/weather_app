@@ -1,16 +1,21 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:weather_app/data_service.dart';
+
 
 void main() {
   runApp(MyApp());
+ 
 }
 class MyApp extends StatefulWidget{
  
  
- 
  @override
 State<MyApp> createState()=> _MyAppState();
+
+
+  
 
   }
 
@@ -18,6 +23,7 @@ State<MyApp> createState()=> _MyAppState();
 
 
 class _MyAppState extends State<MyApp>{
+  final _dataService = DataService();
 
   final _cityTextController = TextEditingController();
 @override
@@ -43,7 +49,7 @@ class _MyAppState extends State<MyApp>{
              ), 
              ),
             ElevatedButton(
-              onPressed: null, 
+              onPressed: _search, 
               child: Text('Search')
               
             ),
@@ -54,6 +60,9 @@ class _MyAppState extends State<MyApp>{
     ),
     );
     
+  }
+  void _search(){
+    _dataService.getWeather(_cityTextController.text);
   }
 
 
