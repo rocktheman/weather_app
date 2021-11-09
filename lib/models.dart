@@ -7,11 +7,32 @@
 
 class weatherResponse {
   final String cityName;
+  final WeatherInfo weatherInfo;
 
-weatherResponse({required this.cityName});
+  String get iconUrl {
+    return 'http://openweathermap.org/img/wn/${weatherInfo.Icon}d@2x.png';
+  }
+
+  weatherResponse({required this.cityName, required this.weatherInfo});
 //factory creates something and return
   factory weatherResponse.fromJson(Map<String, dynamic> json) {
     final cityName = json['name'];
-    return weatherResponse(cityName: cityName);
+
+    final WeatherInfoJson = json['weather'][0];
+    final weatherInfo = WeatherInfo.fromJson(WeatherInfoJson);
+    return weatherResponse(cityName: cityName, weatherInfo: weatherInfo);
+  }
+}
+
+class WeatherInfo {
+  final String description;
+  final String Icon;
+
+  WeatherInfo({required this.description, required this.Icon});
+
+  factory WeatherInfo.fromJson(Map<String, dynamic> json) {
+    final description = json['description'];
+    final Icon = json['icon'];
+    return WeatherInfo(description: description, Icon: Icon);
   }
 }
